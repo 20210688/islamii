@@ -11,6 +11,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
 
         title:Text( 'islamii'),
+
       ),
     );
   }
