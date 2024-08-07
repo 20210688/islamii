@@ -1,3 +1,5 @@
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:islamii/home/tabs/ahadeth.dart';
@@ -5,6 +7,9 @@ import 'package:islamii/home/tabs/quran.dart';
 import 'package:islamii/home/tabs/radio.dart';
 import 'package:islamii/home/tabs/sebha.dart';
 import 'package:islamii/home/tabs/settings.dart';
+import 'package:islamii/my_theme_data.dart';
+import 'package:provider/provider.dart';
+import '../providers/my_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName ='Home';
@@ -21,19 +26,21 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
 
   Widget build(BuildContext context) {
+    var provider = Provider.of<MyProvider>(context);
+
 
     return Stack(
       children: [
-        Image.asset('assets/images/main_bg.png'),
+        Image.asset(
+            provider.mode==ThemeMode.light?
+            'assets/images/main_bg.png':
+            'assets/images/home_dark_background.png'
+        ),
         Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-          centerTitle: true,
-            backgroundColor: Colors.transparent,
 
-            title:Text( 'islamii',style:GoogleFonts.elMessiri(
-              fontSize: 30,color:Colors.black,fontWeight:FontWeight.w700
-            ),
+          appBar: AppBar(
+            title:Text( 'islami'.tr(),
+              style:Theme.of(context).textTheme.bodyLarge ,
             ),
           ),
           bottomNavigationBar: BottomNavigationBar(
@@ -44,26 +51,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
               });
             },
-            backgroundColor: Color(0xffB7935F),
-            type:BottomNavigationBarType.shifting ,
-            selectedItemColor: Colors.black,
-            unselectedItemColor: Colors.white,
-            showSelectedLabels: false,
-            showUnselectedLabels: false,
             items: [
               BottomNavigationBarItem(icon:ImageIcon(AssetImage('assets/images/quran.png') ),label: '',
-              backgroundColor: Color(0xffB7935F) ),
+              ),
               BottomNavigationBarItem(icon:ImageIcon(AssetImage('assets/images/sebha.png') ),label: '',
-              backgroundColor: Color(0xffB7935F) ),
+              ),
               BottomNavigationBarItem(icon:ImageIcon(AssetImage('assets/images/radio.png') ),label: '',
-                backgroundColor: Color(0xffB7935F)),
+               ),
               BottomNavigationBarItem(icon:ImageIcon(AssetImage('assets/images/ahadiths.png') ),label: '',
-              backgroundColor: Color(0xffB7935F)  ),
+               ),
               BottomNavigationBarItem(icon:Icon(Icons.settings ),label: '',
-              backgroundColor: Color(0xffB7935F)),
-
-
-
+             ),
             ],),
           body: tabs[selectedIndex],
         ),
